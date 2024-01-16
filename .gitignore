@@ -3,3 +3,4 @@ dist
 
 # Editor directories and files
 .vscode
+.DS_Store
