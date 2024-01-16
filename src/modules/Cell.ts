@@ -1,11 +1,9 @@
 import Tile from './Tile';
 import cellSprite from '../assets/sprites/cell.png';
+import alternativeCellSprite from '../assets/sprites/alternativeCell.png';
 import { Sprite, Container, Texture } from 'pixi.js';
+import { Position } from '../helpers';
 
-interface Position {
-  x: number;
-  y: number;
-}
 export default class Cell {
   public static readonly CELL_WIDTH = 72;
   public static readonly CELL_HEIGHT = 72;
@@ -14,6 +12,7 @@ export default class Cell {
   private tile: Tile;
   private sprite: Sprite;
   public container: Container;
+  private checked: boolean = false;
 
   constructor(x: number, y: number) {
     this.position.x = x;
@@ -51,5 +50,19 @@ export default class Cell {
       x: this.sprite.x,
       y: this.sprite.y
     }
+  }
+
+  public setAlternativeSprite(): void {
+    const alternativeCellTexture = Texture.from(alternativeCellSprite);
+    this.sprite.texture = alternativeCellTexture;
+  }
+
+  public setDefaultSprite(): void {
+    const cellTexture = Texture.from(cellSprite);
+    this.sprite.texture = cellTexture;
+  }
+
+  public isChecked(): boolean {
+    return this.checked;
   }
 }
