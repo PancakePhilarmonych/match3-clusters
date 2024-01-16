@@ -1,5 +1,5 @@
 import Grid from "./Grid";
-import { Application } from "pixi.js";
+import * as PIXI from "pixi.js";
 
 export default class GameManager {
   private rows: number; // M
@@ -27,10 +27,11 @@ export default class GameManager {
   }
 
   private initApp(): void {
-    const app = new Application({
+    const app = new PIXI.Application({
       width: this.windowWidth,
       height: this.windowHeight,
-      backgroundColor: 0x1099bb,
+      backgroundColor: 0x1e1e1e,
+      antialias: true,
     });
     document.body.appendChild(app.view);
 

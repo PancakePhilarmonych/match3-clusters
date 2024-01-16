@@ -7,8 +7,8 @@ interface Position {
   y: number;
 }
 export default class Cell {
-  public static readonly CELL_WIDTH = 50;
-  public static readonly CELL_HEIGHT = 50;
+  public static readonly CELL_WIDTH = 72;
+  public static readonly CELL_HEIGHT = 72;
 
   private position: Position = {x: 0, y: 0};
   private tile: Tile;

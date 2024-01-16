@@ -1,4 +1,4 @@
 import './assets/main.css';
 import GameManager from './modules/GameManager';
 
-new GameManager(10, 10, 3, 5);
+new GameManager(7, 7, 3, 5);
