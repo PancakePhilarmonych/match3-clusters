@@ -1,8 +1,7 @@
 import Tile from './Tile';
 import cellSprite from '../assets/sprites/cell.png';
-import alternativeCellSprite from '../assets/sprites/alternativeCell.png';
 import { Sprite, Container, Texture } from 'pixi.js';
-import { Position } from '../helpers';
+import { ETileType, Position, cellTexturesByType } from '../helpers';
 
 export default class Cell {
   public static readonly CELL_WIDTH = 72;
@@ -52,8 +51,8 @@ export default class Cell {
     }
   }
 
-  public setAlternativeSprite(): void {
-    const alternativeCellTexture = Texture.from(alternativeCellSprite);
+  public setAlternativeSprite(type: ETileType): void {
+    const alternativeCellTexture = Texture.from(cellTexturesByType[type]);
     this.sprite.texture = alternativeCellTexture;
   }
 
@@ -64,5 +63,9 @@ export default class Cell {
 
   public isChecked(): boolean {
     return this.checked;
+  }
+
+  public setChecked(checked: boolean): void {
+    this.checked = checked;
   }
 }
