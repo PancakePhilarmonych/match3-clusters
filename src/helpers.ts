@@ -11,13 +11,14 @@ import cellFour from './assets/sprites/cellFour.png';
 import cellFive from './assets/sprites/cellFive.png';
 
 import Cell from './modules/Cell';
+import * as PIXI from 'pixi.js';
 
 export enum ETileType {
-  ONE,
-  TWO,
-  TREE,
-  FOUR,
-  FIVE,
+  ONE = 'ONE',
+  TWO = 'TWO',
+  TREE = 'TREE',
+  FOUR = 'FOUR',
+  FIVE = 'FIVE',
 }
 
 export interface Position {
@@ -25,27 +26,27 @@ export interface Position {
   y: number;
 }
 
-export const typeTextures = {
-  [ETileType.ONE]: iconOne,
-  [ETileType.TWO]: iconTwo,
-  [ETileType.TREE]: iconThree,
-  [ETileType.FOUR]: iconFour,
-  [ETileType.FIVE]: iconFive,
+export const tileTextureByType = {
+  [ETileType.ONE]: PIXI.Texture.from(iconOne),
+  [ETileType.TWO]: PIXI.Texture.from(iconTwo),
+  [ETileType.TREE]: PIXI.Texture.from(iconThree),
+  [ETileType.FOUR]: PIXI.Texture.from(iconFour),
+  [ETileType.FIVE]: PIXI.Texture.from(iconFive),
 }
 
 export const cellTexturesByType = {
-  [ETileType.ONE]: cellOne,
-  [ETileType.TWO]: cellTwo,
-  [ETileType.TREE]: cellThree,
-  [ETileType.FOUR]: cellFour,
-  [ETileType.FIVE]: cellFive,
+  [ETileType.ONE]: PIXI.Texture.from(cellOne),
+  [ETileType.TWO]: PIXI.Texture.from(cellTwo),
+  [ETileType.TREE]: PIXI.Texture.from(cellThree),
+  [ETileType.FOUR]: PIXI.Texture.from(cellFour),
+  [ETileType.FIVE]: PIXI.Texture.from(cellFive),
 }
 
-export const randomTileType = () => {
-  const types = [ETileType.ONE, ETileType.TWO, ETileType.TREE, ETileType.FOUR, ETileType.FIVE];
-  const randomIndex = Math.floor(Math.random() * types.length);
-  return types[randomIndex];
-}
+export const getRandomTileType = (): ETileType => {
+  const values = Object.values(ETileType);
+  const randomIndex = Math.floor(Math.random() * values.length);
+  return values[randomIndex] as ETileType;
+};
 
 export const isSameTileType = (neighborCell: Cell, cell: Cell) => {
   return neighborCell.getTile().getType() === cell.getTile().getType();
