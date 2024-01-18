@@ -2,16 +2,14 @@ import Tile from './Tile';
 import cellSprite from '../assets/sprites/cell.png';
 import { Sprite, Container, Texture } from 'pixi.js';
 import { ETileType, Position, cellTexturesByType } from '../helpers';
-
+import GameManager from './GameManager';
 export default class Cell {
-  public static readonly CELL_WIDTH = 72;
-  public static readonly CELL_HEIGHT = 72;
-
-  private position: Position = {x: 0, y: 0};
+  private checked: boolean = false;
   private tile: Tile;
   private sprite: Sprite;
+  private position: Position = {x: 0, y: 0};
+
   public container: Container;
-  private checked: boolean = false;
 
   constructor(x: number, y: number) {
     this.position.x = x;
@@ -20,10 +18,10 @@ export default class Cell {
     const cellTexture = Texture.from(cellSprite);
     this.sprite = new Sprite(cellTexture);
 
-    this.sprite.width = Cell.CELL_WIDTH;
-    this.sprite.height = Cell.CELL_HEIGHT;
-    this.sprite.x = this.position.x * Cell.CELL_WIDTH;
-    this.sprite.y = this.position.y * Cell.CELL_HEIGHT;
+    this.sprite.width = GameManager.cellSize;
+    this.sprite.height = GameManager.cellSize;
+    this.sprite.x = this.position.x * GameManager.cellSize;
+    this.sprite.y = this.position.y * GameManager.cellSize;
     this.tile = new Tile(this);
     const tileContainer = this.tile.getContainer();
 
@@ -44,15 +42,8 @@ export default class Cell {
     return this.position;
   }
 
-  public spritePosition(): Position {
-    return {
-      x: this.sprite.x,
-      y: this.sprite.y
-    }
-  }
-
   public setAlternativeSprite(type: ETileType): void {
-    const alternativeCellTexture = Texture.from(cellTexturesByType[type]);
+    const alternativeCellTexture = cellTexturesByType[type];
     this.sprite.texture = alternativeCellTexture;
   }
 
