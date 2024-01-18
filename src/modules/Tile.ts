@@ -1,24 +1,22 @@
 import Cell from './Cell';
-import { Sprite, Texture, Container } from 'pixi.js';
-import { randomTileType, typeTextures, ETileType } from '../helpers';
+import { Sprite, Container } from 'pixi.js';
+import { getRandomTileType, tileTextureByType, ETileType } from '../helpers';
+import GameManager from './GameManager';
 export default class Tile {
   private container: Container;
-  private cell: Cell;
   private sprite: Sprite;
   private type: ETileType;
 
   constructor(cell: Cell) {
-    this.type = randomTileType();
-    this.cell = cell;
-    const tileTexture = Texture.from(typeTextures[this.type]);
-    this.sprite = new Sprite(tileTexture);
+    this.type = getRandomTileType();
+    this.sprite = new Sprite(tileTextureByType[this.type]);
 
-    this.sprite.width = Cell.CELL_WIDTH;
-    this.sprite.height = Cell.CELL_HEIGHT;
+    this.sprite.width = GameManager.cellSize;
+    this.sprite.height = GameManager.cellSize;
 
     const cellPosition = cell.getPosition();
-    this.sprite.x = cellPosition.x * Cell.CELL_WIDTH;
-    this.sprite.y = cellPosition.y * Cell.CELL_HEIGHT;
+    this.sprite.x = cellPosition.x * GameManager.cellSize;
+    this.sprite.y = cellPosition.y * GameManager.cellSize;
     
 
     this.container = new Container();
