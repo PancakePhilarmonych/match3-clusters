@@ -1,45 +1,65 @@
 import Grid from "./Grid";
 import * as PIXI from "pixi.js";
+import gsap from "gsap";
+import StartButton from "./StartButton";
 
 export default class GameManager {
-  private rows: number; // M
-  private columns: number; // N
-  private clusterSize: number; // X
-  private iconsCount: number; // Y
+  public static rows: number; // M
+  public static columns: number; // N
+  public static clusterMinSize: number; // X
+  public static colorsCount: number; // Y
 
-  private windowWidth: number;
-  private windowHeight: number;
+  public static cellSize: number;
+  public static buttonSize: number;
+
   private grid: Grid
+  private startButton: StartButton;
 
+  public static setConfig(rows: number, columns: number, clusterSize: number, iconsCount: number): void {
+    const isLandscape = window.innerWidth > window.innerHeight;
 
-  constructor(rows: number, columns: number, clusterSize: number, iconsCount: number) {
-    this.rows = rows;
-    this.columns = columns;
-    this.clusterSize = clusterSize;
-    this.iconsCount = iconsCount;
+    GameManager.rows = rows;
+    GameManager.columns = columns; 
+    GameManager.clusterMinSize = clusterSize;
+    GameManager.colorsCount = iconsCount;
+    GameManager.cellSize = window.innerWidth / columns / (isLandscape ? 3 : 1.5);
+    GameManager.buttonSize = window.innerHeight / 8;
+  }
 
-    this.windowWidth = window.innerWidth;
-    this.windowHeight = window.innerHeight;
-
-    this.grid = new Grid(this.columns, this.rows, this.clusterSize, this.iconsCount);
+  constructor() {
+    if(!GameManager.rows || !GameManager.columns || !GameManager.clusterMinSize || !GameManager.colorsCount) {
+      throw new Error('Game config is not set');
+    }
 
     this.initApp();
   }
 
+  private restart(): void {
+    this.grid.init();
+  }
+
   private initApp(): void {
     const app = new PIXI.Application({
-      width: this.windowWidth,
-      height: this.windowHeight,
+      width: window.innerWidth,
+      height: window.innerHeight,
       backgroundColor: 0x1e1e1e,
       antialias: true,
     });
-    document.body.appendChild(app.view);
 
-    const gridContainer = this.grid.getGridContainer();
-    app.stage.addChild(gridContainer);
+    this.grid = new Grid();
+    this.startButton = new StartButton();
 
-    app.ticker.add(() => {
-      // this.grid.update();
+    const buttonContainer = this.startButton.getContainer();
+
+    buttonContainer.on('pointerdown', () => {
+      gsap.to(buttonContainer, { alpha: 0.5, duration: 0.2 });
+      gsap.to(buttonContainer, { alpha: 1, duration: 0.2, delay: 0.2 });
+      this.restart();
     });
+
+    app.stage.addChild(this.grid.getContainer());
+    app.stage.addChild(this.startButton.getContainer());
+    
+    document.body.appendChild(app.view);
   }
 }
