@@ -1,7 +1,7 @@
-import Grid from "./Grid";
-import * as PIXI from "pixi.js";
-import gsap from "gsap";
-import StartButton from "./StartButton";
+import Grid from './Grid';
+import * as PIXI from 'pixi.js';
+import gsap from 'gsap';
+import StartButton from './StartButton';
 
 export default class GameManager {
   public static rows: number; // M
@@ -12,14 +12,19 @@ export default class GameManager {
   public static cellSize: number;
   public static buttonSize: number;
 
-  private grid: Grid
+  private grid: Grid;
   private startButton: StartButton;
 
-  public static setConfig(rows: number, columns: number, clusterSize: number, iconsCount: number): void {
+  public static setConfig(
+    rows: number,
+    columns: number,
+    clusterSize: number,
+    iconsCount: number,
+  ): void {
     const isLandscape = window.innerWidth > window.innerHeight;
 
     GameManager.rows = rows;
-    GameManager.columns = columns; 
+    GameManager.columns = columns;
     GameManager.clusterMinSize = clusterSize;
     GameManager.colorsCount = iconsCount;
     GameManager.cellSize = window.innerWidth / columns / (isLandscape ? 3 : 1.5);
@@ -27,7 +32,12 @@ export default class GameManager {
   }
 
   constructor() {
-    if(!GameManager.rows || !GameManager.columns || !GameManager.clusterMinSize || !GameManager.colorsCount) {
+    if (
+      !GameManager.rows ||
+      !GameManager.columns ||
+      !GameManager.clusterMinSize ||
+      !GameManager.colorsCount
+    ) {
       throw new Error('Game config is not set');
     }
 
@@ -59,7 +69,7 @@ export default class GameManager {
 
     app.stage.addChild(this.grid.getContainer());
     app.stage.addChild(this.startButton.getContainer());
-    
+
     document.body.appendChild(app.view);
   }
 }

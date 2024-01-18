@@ -1,13 +1,14 @@
 import Tile from './Tile';
 import cellSprite from '../assets/sprites/cell.png';
-import { Sprite, Container, Texture } from 'pixi.js';
+import { Container, Sprite, Texture } from 'pixi.js';
 import { ETileType, Position, cellTexturesByType } from '../helpers';
 import GameManager from './GameManager';
+
 export default class Cell {
   private checked: boolean = false;
   private tile: Tile;
   private sprite: Sprite;
-  private position: Position = {x: 0, y: 0};
+  private position: Position = { x: 0, y: 0 };
 
   public container: Container;
 

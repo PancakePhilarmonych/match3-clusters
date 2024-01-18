@@ -2,6 +2,7 @@ import Cell from './Cell';
 import { Sprite, Container } from 'pixi.js';
 import { getRandomTileType, tileTextureByType, ETileType } from '../helpers';
 import GameManager from './GameManager';
+
 export default class Tile {
   private container: Container;
   private sprite: Sprite;
@@ -17,7 +18,6 @@ export default class Tile {
     const cellPosition = cell.getPosition();
     this.sprite.x = cellPosition.x * GameManager.cellSize;
     this.sprite.y = cellPosition.y * GameManager.cellSize;
-    
 
     this.container = new Container();
     this.container.addChild(this.sprite);

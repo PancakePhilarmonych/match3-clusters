@@ -1,5 +1,6 @@
 import * as PIXI from 'pixi.js';
 import GameManager from './GameManager';
+
 export default class StartButton {
   private button: PIXI.Graphics;
   private text: PIXI.Text;
@@ -10,6 +11,7 @@ export default class StartButton {
     this.createButtonText();
 
     this.container = new PIXI.Container();
+
     this.container.interactive = true;
 
     this.container.x = window.innerWidth / 2 - GameManager.buttonSize / 2;
@@ -32,12 +34,12 @@ export default class StartButton {
   private createButtonText(): void {
     this.text = new PIXI.Text('Start', {
       fontSize: GameManager.buttonSize / 4,
-      fontFamily: "Arial",
+      fontFamily: 'Arial',
       fill: '#FFFFFF',
     });
 
     this.text.x = this.button.width / 2 - this.text.width / 2;
-    this.text.y = this.button.height / 2 - this.text.height / 2; 
+    this.text.y = this.button.height / 2 - this.text.height / 2;
 
     this.text.zIndex = 2;
   }
@@ -46,4 +48,3 @@ export default class StartButton {
     return this.container;
   }
 }
-

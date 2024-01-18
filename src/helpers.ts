@@ -21,10 +21,10 @@ export enum ETileType {
   FIVE = 'FIVE',
 }
 
-export interface Position {
+export type Position = {
   x: number;
   y: number;
-}
+};
 
 export const tileTextureByType = {
   [ETileType.ONE]: PIXI.Texture.from(iconOne),
@@ -32,7 +32,7 @@ export const tileTextureByType = {
   [ETileType.TREE]: PIXI.Texture.from(iconThree),
   [ETileType.FOUR]: PIXI.Texture.from(iconFour),
   [ETileType.FIVE]: PIXI.Texture.from(iconFive),
-}
+};
 
 export const cellTexturesByType = {
   [ETileType.ONE]: PIXI.Texture.from(cellOne),
@@ -40,7 +40,7 @@ export const cellTexturesByType = {
   [ETileType.TREE]: PIXI.Texture.from(cellThree),
   [ETileType.FOUR]: PIXI.Texture.from(cellFour),
   [ETileType.FIVE]: PIXI.Texture.from(cellFive),
-}
+};
 
 export const getRandomTileType = (): ETileType => {
   const values = Object.values(ETileType);
@@ -50,4 +50,4 @@ export const getRandomTileType = (): ETileType => {
 
 export const isSameTileType = (neighborCell: Cell, cell: Cell) => {
   return neighborCell.getTile().getType() === cell.getTile().getType();
-}
+};

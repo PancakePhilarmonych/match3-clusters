@@ -16,10 +16,7 @@ module.exports = {
       },
       {
         test: /\.css$/i,
-        use: [
-          "style-loader",
-          "css-loader",
-        ],
+        use: ['style-loader', 'css-loader'],
       },
       {
         test: /\.(png|jpe?g|gif)$/i,
@@ -34,7 +31,7 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       title: 'Output Management',
-      template: './src/index.html'
+      template: './src/index.html',
     }),
   ],
   resolve: {
