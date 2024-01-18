@@ -16,7 +16,7 @@ export default class Grid {
 
     public init(): void {
       this.createGrid();
-      this.fillClusters();
+      this.clusters = this.findClusters();
       this.makeClustersActive();
     }
 
@@ -38,22 +38,22 @@ export default class Grid {
       }
     }
 
-    public fillClusters() {
-      this.clusters = [];
-
-      this.cells.forEach((column) => {
+    public findClusters() {
+      return this.cells.reduce((acc: Cell[][], column) => {
         column.forEach((cell) => {
           if (cell.isChecked()) {
             return;
           }
-
+    
           const cellChain = this.getCellChain(cell);
-
-          if (cellChain.length) { 
-            this.clusters.push(cellChain);
+    
+          if (cellChain.length) {
+            acc.push(cellChain);
           }
         });
-      });
+    
+        return acc;
+      }, []);
     }
 
     public makeClustersActive(): void {
