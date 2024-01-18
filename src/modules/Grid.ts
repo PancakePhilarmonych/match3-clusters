@@ -1,25 +1,13 @@
 import { Container } from "pixi.js";
 import { isSameTileType } from "../helpers";
 import Cell from "./Cell";
+import GameManager from "./GameManager";
 export default class Grid {
     private container: Container; 
     private cells: Cell[][] = [];
     private clusters: Cell[][];
-    private minClusterSize: number;
-    private typesCount: number;
-    private columns: number;
-    private rows: number;
     
-    constructor(
-      columns: number,
-      rows: number,
-      minClusterSize: number,
-      typesCount: number
-    ) {
-      this.minClusterSize = minClusterSize;
-      this.typesCount = typesCount;
-      this.columns = columns;
-      this.rows = rows;
+    constructor() {
       this.container = new Container();
 
       this.setContainerPosition();
@@ -33,16 +21,16 @@ export default class Grid {
     }
 
     public setContainerPosition(): void {
-      this.container.x = window.innerWidth / 2 - (this.columns * Cell.CELL_WIDTH) / 2;
-      this.container.y = window.innerHeight / 2 - (this.rows * Cell.CELL_HEIGHT) / 2;
+      this.container.x = window.innerWidth / 2 - (GameManager.columns * GameManager.cellSize) / 2;
+      this.container.y = window.innerHeight / 2 - (GameManager.rows * GameManager.cellSize) / 2;
     }
 
     public createGrid() {
       this.cells = [];
 
-      for (let x = 0; x < this.columns; x++) {
+      for (let x = 0; x < GameManager.columns; x++) {
         this.cells[x] = [];
-        for (let y = 0; y < this.rows; y++) {
+        for (let y = 0; y < GameManager.rows; y++) {
           const newCell = new Cell(x, y);
           this.cells[x][y] = newCell;
           this.container.addChild(newCell.container);
@@ -69,16 +57,19 @@ export default class Grid {
     }
 
     public makeClustersActive(): void {
-      this.clusters.forEach((cluster) => {
-        if (cluster.length < this.minClusterSize) return;
-        console.log(cluster);
+      const valideClusters = this.clusters.filter((cluster) => cluster.length >= GameManager.clusterMinSize);
+      if(!valideClusters.length) {
+        this.init();
+        return;
+      }
 
+      valideClusters.forEach((cluster) => {
         const clusterType = cluster[0].getTile().getType();
         cluster.forEach((cell) => cell.setAlternativeSprite(clusterType));
       });
     }
 
-    public getGridContainer(): Container {
+    public getContainer(): Container {
       return this.container;
     }
 
