@@ -1,0 +1,22 @@
+name: PR description builder
+
+on:
+  pull_request:
+    types: [opened, reopened]
+    branches:
+      - master
+jobs:
+  build-pr-description:
+
+    name: git-pr-description
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Generate PR description
+      uses: grassedge/git-pr-release-action@v1.0
+      with:
+        token: "${{ secrets.GITHUB_TOKEN }}"
+        head: ${{ github.head_ref }}
+        base: ${{ github.base_ref }}
+        template: .github/git-pr-release-template.mustache
